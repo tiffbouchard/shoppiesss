@@ -1,12 +1,13 @@
 import Search from "../Search/Search";
 
-export default function Nav(props) {
+export default function Nav({handleChange, handleSubmit, searchQuery}) {
   return (
     <nav>
       <img src="/logo.png"/>
       <Search
-        handleChange={props.handleChange}
-        handleSubmit={props.handleSubmit}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        searchQuery={searchQuery}
       />
     </nav>
   )
