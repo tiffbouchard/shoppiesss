@@ -33,11 +33,15 @@ class App extends Component {
     event.preventDefault()
     try {
       const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.searchQuery}&page=1`);
-      this.setState({page: 1})
-      this.setState({searchResults : response.data.Search});
-      this.setState({totalResults: response.data.totalResults });
-      this.setState({totalPages: Math.ceil(this.state.totalResults / 10)});
-      this.setState({searchQuery: ""});
+      if (response.data.Error) {
+        console.log("No results")
+      } else {
+        this.setState({page: 1})
+        this.setState({searchResults : response.data.Search});
+        this.setState({totalResults: response.data.totalResults });
+        this.setState({totalPages: Math.ceil(this.state.totalResults / 10)});
+        this.setState({searchQuery: ""});
+      }
     } catch(err) {
       console.log(err);
       return err;
