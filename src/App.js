@@ -20,6 +20,12 @@ class App extends Component {
     }
   }
 
+
+  componentDidMount = () => {
+    const savedNominations = JSON.parse(localStorage.getItem("nominations") || "[]");
+    this.setState({nominations: savedNominations});
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault()
     try {
@@ -27,6 +33,9 @@ class App extends Component {
       this.setState({searchResults : response.data.Search});
       this.setState({totalResults: response.data.totalResults });
       this.setState({searchQuery: ""});
+
+      
+
     } catch(err) {
       console.log(err);
       return err;
@@ -45,6 +54,7 @@ class App extends Component {
         console.log("You already added this movie!")
       } else {
         this.setState({nominations: [...this.state.nominations, result]});
+        localStorage.setItem("nominations", JSON.stringify(this.state.nominations));
       }
     }
   }
@@ -54,6 +64,7 @@ class App extends Component {
   removeNomination = (event) => {
     let filterNomArr = this.state.nominations.filter(nom => nom['imdbID'] !== event.target.value);
     this.setState({nominations: filterNomArr});
+    localStorage.setItem("nominations", JSON.stringify(filterNomArr));
   }
 
   render() {
