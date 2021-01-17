@@ -14,9 +14,11 @@ class App extends Component {
     this.state = {
       searchResults: [],
       searchQuery: "",
-      page: 1,
+      lastSearchQuery: "",
+      page: 0,
       totalResults: null,
-      nominations: []
+      nominations: [],
+      totalPages: null
     }
   }
 
@@ -27,15 +29,27 @@ class App extends Component {
   }
 
   handleSubmit = async (event) => {
+    this.setState({lastSearchQuery: this.state.searchQuery})
     event.preventDefault()
     try {
-      const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.searchQuery}&page=${this.state.page}`);
+      const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.searchQuery}&page=1`);
+      this.setState({page: 1})
       this.setState({searchResults : response.data.Search});
       this.setState({totalResults: response.data.totalResults });
+      this.setState({totalPages: Math.ceil(this.state.totalResults / 10)});
       this.setState({searchQuery: ""});
+    } catch(err) {
+      console.log(err);
+      return err;
+    }
+  }
 
-      
-
+  loadMore = async (event) => {
+    event.preventDefault()
+    try {
+      const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.lastSearchQuery}&page=${this.state.page + 1}`);
+      this.setState({page: this.state.page + 1})
+      this.setState({searchResults : [...this.state.searchResults, ...response.data.Search]});
     } catch(err) {
       console.log(err);
       return err;
@@ -68,7 +82,7 @@ class App extends Component {
   }
 
   render() {
-    const {searchQuery, searchResults, totalResults, nominations} = this.state;
+    const {searchQuery, searchResults, totalResults, nominations, page} = this.state;
     return (
       <div className="App">
         <Nav 
@@ -80,6 +94,8 @@ class App extends Component {
           searchResults={searchResults}
           totalResults={totalResults}
           handleNominate={this.handleNominate}
+          loadMore={this.loadMore}
+          page={page}
         />
         <Nominations
           nominations={nominations}
