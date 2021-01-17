@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 
+import Nav from "./components/Nav/Nav";
+import Results from "./components/Results/Results";
+
 import axios from 'axios';
 
 class App extends Component {
@@ -9,7 +12,8 @@ class App extends Component {
     this.state = {
       searchResults: [],
       searchQuery: "",
-      page: 1
+      page: 1,
+      totalResults: null
     }
   }
 
@@ -18,7 +22,7 @@ class App extends Component {
     try {
       const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.searchQuery}&page=${this.state.page}`);
       this.setState({searchResults : response.data.Search});
-      console.log(this.state.searchResults);
+      this.setState({totalResults: response.data.totalResults })
     } catch(err) {
       console.log(err);
       return err;
@@ -33,11 +37,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* navbar */}
+        <Nav 
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+        <Results
+          searchResults={this.state.searchResults}
+          totalResults={this.state.totalResults}
+        />
         {/* main component */}
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" onChange={this.handleChange} name="searchQuery"/>
-        </form>
        {/* footer */}
       </div>
     );
