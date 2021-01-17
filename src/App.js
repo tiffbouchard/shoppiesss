@@ -52,7 +52,8 @@ class App extends Component {
   //if nomination is already nominated - disabled button
 
   removeNomination = (event) => {
-    this.setState({nominations: [...this.state.nominations, event.target.value]});
+    let filterNomArr = this.state.nominations.filter(nom => nom['imdbID'] !== event.target.value);
+    this.setState({nominations: filterNomArr});
   }
 
   render() {

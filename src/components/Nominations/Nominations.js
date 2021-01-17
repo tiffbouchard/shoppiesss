@@ -7,7 +7,7 @@ export default function Nominations({removeNomination, nominations}) {
           <div>{nom.Title}</div>
           <div>{nom.Year}</div>
           <a href={`http://imdb.com/title/${nom.imdbID}`} target="_blank" rel="noreferrer">View on IMDB</a>
-          <button onClick={removeNomination}>Remove</button>
+          <button onClick={removeNomination} value={nom.imdbID}>Remove</button>
         </div>
       ))}
     </div>
