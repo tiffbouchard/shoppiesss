@@ -6,7 +6,18 @@ import Results from "./components/Results/Results";
 import Nominations from "./components/Nominations/Nominations";
 import Footer from "./components/Footer/Footer";
 
+import styled from "styled-components";
 import axios from 'axios';
+
+const Container = styled.div`
+  display: flex;
+  align-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+`
+const Main = styled.main`
+  flex: 1;
+`
 
 class App extends Component {
   constructor(props) {
@@ -88,11 +99,16 @@ class App extends Component {
   render() {
     const {searchQuery, searchResults, totalResults, nominations, page} = this.state;
     return (
-      <div className="App">
+      <Container>
         <Nav 
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           searchQuery={searchQuery}
+        />
+        <Main>
+        <Nominations 
+          nominations={nominations}
+          removeNomination={this.removeNomination}
         />
         <Results
           searchResults={searchResults}
@@ -101,12 +117,9 @@ class App extends Component {
           loadMore={this.loadMore}
           page={page}
         />
-        <Nominations
-          nominations={nominations}
-          removeNomination={this.removeNomination}
-        />
+        </Main>
         <Footer/>
-      </div>
+      </Container>
     );
   }
 }
