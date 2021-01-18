@@ -57,7 +57,7 @@ class App extends Component {
   handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.searchQuery}&page=1`);
+      const response = await axios.get(`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.searchQuery}&page=1`);
       if (response.data.Error) {
         this.setState({noResultsError: true});
         this.setState({searchQuery: ""});
@@ -86,7 +86,7 @@ class App extends Component {
   loadMore = async (event) => {
     event.preventDefault()
     try {
-      const response = await axios.get(`http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.lastSearchQuery}&page=${this.state.page + 1}`);
+      const response = await axios.get(`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${this.state.lastSearchQuery}&page=${this.state.page + 1}`);
       if (this.state.totalPages > this.state.page  ) {
         this.setState({page: this.state.page + 1})
         this.setState({searchResults : [...this.state.searchResults, ...response.data.Search]});
