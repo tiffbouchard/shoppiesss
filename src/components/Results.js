@@ -127,19 +127,19 @@ const Badge = styled.a`
 `
 
 
-export default function Results({searchResults, totalResults, handleNominate, loadMore, page}) {
+export default function Results({searchResults, totalResults, handleNominate, loadMore, page, noResultsError, allLoaded}) {
   return (
     <ResultsContainer>
       <div id="header">Search Results</div>
       {totalResults ? <div id="results-num">{totalResults} results</div>: ""}
       <CardsContainer>
-        {searchResults && searchResults.map((result) => (
+        {searchResults && !noResultsError && searchResults.map((result) => (
           <Card className="tv" key={result.imdbID}>
             <Badge className="tv" href={`http://imdb.com/title/${result.imdbID}`} target="_blank" rel="noreferrer">
               <p>VIEW ON IMDB</p>
-              <img src="/starburst.png"/>
+              <img src="/starburst.png" alt="badge"/>
             </Badge>
-            <div class="img-container">
+            <div className="img-container">
               <img src={result.Poster && result.Poster !== "N/A" ? result.Poster : "./poster-placeholder.png"} alt={result.Title}/> 
             </div>
             <div className="description">
@@ -151,9 +151,11 @@ export default function Results({searchResults, totalResults, handleNominate, lo
         ))}
       </CardsContainer>
       {page === 0 ? "" : <Button type="button" className="tv" onClick={loadMore}>Gimme more</Button>}
+      {allLoaded && <div>This is the end of the line</div>}
+      {noResultsError && <ResultsContainer><p>Nothing matched your search, sorry</p></ResultsContainer>}
       {totalResults === 0 && 
       <ResultsContainer>
-        <img src="/sadness.png" id="error"/>
+        <img src="/sadness.png" id="error" alt="no-results"/>
         <p>There is nothing here, why don't you search something up</p>
       </ResultsContainer>
       }

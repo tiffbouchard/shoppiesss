@@ -6,6 +6,7 @@ const NominationContainer = styled.section`
   justify-content: center;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
+  padding: 20px 0;
   #header {
     position: absolute;
     top: -20px;
@@ -30,7 +31,7 @@ const NominationCards= styled.div`
   const NominationCard = styled.div`
   margin: 10px;
   height: auto;
-  width: 170px;
+  width: 150px;
   border: solid 1px black;
   img {
     height: auto;
@@ -39,31 +40,27 @@ const NominationCards= styled.div`
     border-bottom: 1px solid black;
   }
   .description {
+    height: auto;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    justify-content:center;
     text-align: center;
     margin: 20px 0;
     #title {
       font-weight: bold;
+      margin-bottom: 10px;
     }
   }
 `
 
-
-const Button = styled.button`
-  border: 1px solid black;
-  background-color: white;
-  color: black;
-  padding: 10px;
-  margin: 10px;
-  width: 150px;
-  transition: .2s;
-  &:hover {
-    box-shadow: -3px 3px;
+const FakeNav = styled.div`
+  height: 35px;
+  background: black;
+  button {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 20px;
   }
+
 `
 
 export default function Nominations({removeNomination, nominations}) {
@@ -73,19 +70,19 @@ export default function Nominations({removeNomination, nominations}) {
       <NominationCards>
         {nominations && nominations.map((nom) => (
           <NominationCard className="tv" key={nom.Title}>
+            <FakeNav><button onClick={removeNomination} value={nom.imdbID} className="tv">x</button></FakeNav>
             <img src={nom.Poster !== "N/A" ? nom.Poster : "./poster-placeholder.png"} alt={nom.Title}/>
             <div className="description">
               <div id="title">{nom.Title}</div>
               <div>{nom.Year}</div>
             </div>
-            <Button className="tv" onClick={removeNomination} value={nom.imdbID}>Remove</Button>
           </NominationCard>
         ))}
       </NominationCards>
       {!nominations.length && 
       <div id="no-noms">
         <p>There's nothing to see here ☹</p>
-        <small>Search and nominate 5 of your all-time favourite movies to be considered for a Shoppie!</small>
+        <small>Search and nominate 5 of your all-time favourite movies to be considered for a Shoppie</small>
       </div>
       }
     </NominationContainer>
