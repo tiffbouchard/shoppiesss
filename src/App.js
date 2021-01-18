@@ -106,21 +106,20 @@ class App extends Component {
   handleNominate = (result) => {
     if (this.state.nominations.length === 5) {
       this.notify("You already have 5 nominations ☺ thank you!");
-    } else {
-      if (this.state.nominations.some( nom => nom['imdbID'] === result.imdbID )) {
+    } else if (this.state.nominations.some( nom => nom['imdbID'] === result.imdbID )) {
         this.notify("You already added this movie!");
-      } else {
-        this.setState({nominations: [...this.state.nominations, result]});
-        localStorage.setItem("nominations", JSON.stringify(this.state.nominations));
-        this.notify("Yay! Added movie successfully");
-      }
+    } else {
+      const newNomArr = [...this.state.nominations, result];
+      localStorage.setItem("nominations", JSON.stringify(newNomArr));
+      this.setState({nominations: [...this.state.nominations, result]});
+      this.notify("Yay! Added movie successfully");
     }
   }
 
-  //if nomination is already nominated - disabled button
 
   removeNomination = (event) => {
     let filterNomArr = this.state.nominations.filter(nom => nom['imdbID'] !== event.target.value);
+    console.log(filterNomArr)
     this.setState({nominations: filterNomArr});
     localStorage.setItem("nominations", JSON.stringify(filterNomArr));
     this.notify("Aw man you removed a movie from your nominations");

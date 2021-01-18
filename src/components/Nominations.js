@@ -26,7 +26,8 @@ const NominationCards= styled.div`
   display: flex;
   justify-content: space-around;
   padding: 20px 0px;
-  `
+  overflow-x: auto;
+`
   
   const NominationCard = styled.div`
   margin: 10px;
@@ -47,6 +48,9 @@ const NominationCards= styled.div`
     #title {
       font-weight: bold;
       margin-bottom: 10px;
+    }
+    @media (max-width: 690px) {
+      font-size: 10px;
     }
   }
 `
@@ -69,7 +73,7 @@ export default function Nominations({removeNomination, nominations}) {
       <div id="header">Your Nominations</div>
       <NominationCards>
         {nominations && nominations.map((nom) => (
-          <NominationCard className="tv" key={nom.Title}>
+          <NominationCard className="tv" key={nom.imdbID}>
             <FakeNav><button onClick={removeNomination} value={nom.imdbID} className="tv">x</button></FakeNav>
             <img src={nom.Poster !== "N/A" ? nom.Poster : "./poster-placeholder.png"} alt={nom.Title}/>
             <div className="description">
