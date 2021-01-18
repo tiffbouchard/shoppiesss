@@ -7,7 +7,8 @@ const Header = styled.nav`
   padding: 20px;
   margin: 0px 20px;
   a {
-    width: 100px;
+    width: auto;
+    height: 100%;
   }
   img {
     height: 100%;
