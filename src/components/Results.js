@@ -5,6 +5,26 @@ const ResultsContainer = styled.section`
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  position: relative;
+  #error {
+    height: 300px;
+    width: auto;
+    p {
+      text-align: center;
+    }
+  }
+  #header {
+    background: black;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    position: absolute;
+    top: -50px;
+  }
+  #results-num {
+    margin-top: 30px;
+  }
 `
 
 const CardsContainer = styled.div`
@@ -13,6 +33,7 @@ const CardsContainer = styled.div`
   align-items: center;
   justify-content: center;
   max-width: 1200px;
+  
 `
 
 const Card = styled.div`
@@ -109,7 +130,8 @@ const Badge = styled.a`
 export default function Results({searchResults, totalResults, handleNominate, loadMore, page}) {
   return (
     <ResultsContainer>
-      <div>{totalResults} results</div>
+      <div id="header">Search Results</div>
+      {totalResults ? <div id="results-num">{totalResults} results</div>: ""}
       <CardsContainer>
         {searchResults && searchResults.map((result) => (
           <Card className="tv" key={result.imdbID}>
@@ -129,6 +151,12 @@ export default function Results({searchResults, totalResults, handleNominate, lo
         ))}
       </CardsContainer>
       {page === 0 ? "" : <Button type="button" className="tv" onClick={loadMore}>Gimme more</Button>}
-    </ResultsContainer>
+      {totalResults === 0 && 
+      <ResultsContainer>
+        <img src="/sadness.png" id="error"/>
+        <p>There is nothing here, why don't you search something up</p>
+      </ResultsContainer>
+      }
+      </ResultsContainer>
   )
 }

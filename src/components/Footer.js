@@ -5,12 +5,16 @@ const FooterContainer = styled.footer`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 400px;
+  height: 200px;
   background-color: black;
   color: white;
   img {
     height: 80px;
     width: auto;
+    margin: 10px;
+  }
+  a {
+    color: white;
   }
 `
 
@@ -18,7 +22,7 @@ export default function Footer(props) {
   return (
     <FooterContainer>
       <img src="/logo-plain.png" alt="footer-logo"/>
-      <div>Made with&nbsp;💚 &nbsp;by Tiffany for Shopify&nbsp;🛍️ </div>
+      <div>Made with&nbsp;💚 &nbsp;by <a href="http://github.com/tiffbouchard">Tiffany</a> for Shopify&nbsp;🛍️ </div>
     </FooterContainer>
   )
 }

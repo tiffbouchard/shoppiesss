@@ -1,11 +1,14 @@
-import Search from "../Search/Search"; 
+import Search from "./Search"; 
 import styled from "styled-components";
 
 const Header = styled.nav`
   display: flex;
   height: 100px;
-  border-bottom: 1px solid black;
   padding: 20px;
+  margin: 0px 20px;
+  a {
+    width: 100px;
+  }
   img {
     height: 100%;
     width: auto;
@@ -15,7 +18,9 @@ const Header = styled.nav`
 export default function Nav({handleChange, handleSubmit, searchQuery}) {
   return (
     <Header>
-      <img src="/logo-plain.png" alt="header-logo"/>
+      <a href="/">
+        <img src="/logo-plain.png" alt="header-logo"/>
+      </a>
       <Search
         handleChange={handleChange}
         handleSubmit={handleSubmit}

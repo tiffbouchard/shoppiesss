@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
 
-import Nav from "./components/Nav/Nav";
-import Results from "./components/Results/Results";
-import Nominations from "./components/Nominations/Nominations";
-import Footer from "./components/Footer/Footer";
+import Nav from "./components/Nav";
+import Results from "./components/Results";
+import Nominations from "./components/Nominations";
+import Footer from "./components/Footer";
+import Modal from "./components/Modal";
 
 import styled from "styled-components";
 import axios from 'axios';
@@ -27,9 +28,10 @@ class App extends Component {
       searchQuery: "",
       lastSearchQuery: "",
       page: 0,
-      totalResults: null,
+      totalResults: 0,
       nominations: [],
-      totalPages: null
+      totalPages: null,
+      modalOpen: false
     }
   }
 
@@ -37,6 +39,12 @@ class App extends Component {
   componentDidMount = () => {
     const savedNominations = JSON.parse(localStorage.getItem("nominations") || "[]");
     this.setState({nominations: savedNominations});
+    if (localStorage.getItem("modalOpenedInit")) {
+      this.setState({modalOpen: false});
+    } else {
+      this.setState({modalOpen: true});
+      localStorage.setItem("modalOpenedInit", true);
+    }
   }
 
   handleSubmit = async (event) => {
@@ -96,10 +104,18 @@ class App extends Component {
     localStorage.setItem("nominations", JSON.stringify(filterNomArr));
   }
 
+  closeModal = () => {
+    this.setState({modalOpen: false})
+  }
+
   render() {
-    const {searchQuery, searchResults, totalResults, nominations, page} = this.state;
+    const {searchQuery, searchResults, totalResults, nominations, page, modalOpen} = this.state;
     return (
       <Container>
+        <Modal
+          modalOpen={modalOpen}
+          closeModal={this.closeModal}
+        />
         <Nav 
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
