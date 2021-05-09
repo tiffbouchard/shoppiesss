@@ -26,21 +26,22 @@ const NominationCards= styled.div`
   display: flex;
   justify-content: space-around;
   padding: 20px 0px;
-  overflow-x: auto;
 `
   
   const NominationCard = styled.div`
+  border-radius: 20px;
   margin: 10px;
-  height: auto;
+  height: 150px;
   width: 150px;
-  border: solid 1px black;
+  position: relative;
   img {
-    height: auto;
+    height: 100%;
     width: 100%;
     object-fit: cover;
-    border-bottom: 1px solid black;
   }
   .description {
+    position: absolute;
+    bottom: 0;
     height: auto;
     width: 100%;
     text-align: center;
@@ -58,6 +59,7 @@ const NominationCards= styled.div`
 const FakeNav = styled.div`
   height: 35px;
   background: black;
+  border-radius: 18px 18px 0 0;
   button {
     background: transparent;
     color: white;

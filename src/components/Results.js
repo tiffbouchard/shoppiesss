@@ -28,12 +28,12 @@ const ResultsContainer = styled.section`
 `
 
 const CardsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  max-width: 1200px;
-  
+  display: grid;
+  grid-template-columns:  repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 30px;
+  width: 100%;
+  padding: 0 50px 0 0px;
+  max-width: 1400px;
 `
 
 const Card = styled.div`
@@ -41,18 +41,26 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid 1px black;
-  width: 190px;
+  width: 100%;
+  box-shadow: 0px 10px 10px rgb(189 188 188 / 50%);
   height: auto;
   position: relative;
   background-color: white;
+  border-radius: 20px;
   .img-container {
-    height: 300px;
-    border-bottom: 1px solid black;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
     img {
       object-fit: cover;
       width: 100%;
       height: 100%;
+      border-radius: 20px 20px 0 0;
+      transition: 0.3s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
   .description {
@@ -65,31 +73,21 @@ const Card = styled.div`
       margin-bottom: 7px;
       font-weight: bold;
     }
-  }
-  &::before {
-    transform: translate(-8px, 8px);
-    z-index: -1;
-    background-color: white;
-    border: 1px solid black;
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    }
   }
 `
 
 const Button = styled.button`
   border: 1px solid black;
-  background-color: white;
-  color: black;
+  background-color: black;
+  border-radius: 15px;
+  color: white;
   padding: 10px;
   margin: 10px;
   width: 150px;
   transition: .2s;
   &:hover {
-    box-shadow: -3px 3px;
+    box-shadow: -5px 5px;
   }
 `
 
@@ -150,7 +148,7 @@ export default function Results({searchResults, totalResults, handleNominate, lo
           </Card>
         ))}
       </CardsContainer>
-      {page === 0 ? "" : <Button type="button" className="tv" onClick={loadMore}>Gimme more</Button>}
+      {page === 0 ? "" : <Button type="button" className="tv" onClick={loadMore}>Show me more!</Button>}
       {allLoaded && <div>This is the end of the line</div>}
       {noResultsError && <ResultsContainer><p>Nothing matched your search, sorry</p></ResultsContainer>}
       {totalResults === 0 && 
