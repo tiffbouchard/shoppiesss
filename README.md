@@ -12,5 +12,4 @@ A tech challenge for the front-end shopify internship
 
 ## Things I would want to add 
 - Fix UI - some design changes that impact UX (different colours for error and success toasts/notifications)
-- Auto complete results while typing in search bar
-- Add carousel to nominations for better UX instead of just making them smaller, doesnt look good when cards just get squished
+- ~~Add carousel to nominations for better UX instead of just making them smaller, doesnt look good when cards just get squished~~
