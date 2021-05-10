@@ -1,58 +1,113 @@
 import styled from "styled-components";
 
 const NominationContainer = styled.section`
-  position: relative;
   display: flex;
-  justify-content: center;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  padding: 20px 0;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 100px 0;
   #header {
-    position: absolute;
-    top: -20px;
     background: black;
     color: white;
     padding: 15px;
     font-weight: bold;
     border-radius: 10px;
+    margin-bottom: 20px;
+    @media (max-width: 690px) {
+      position: absolute;
+      top: 0;
+      margin-bottom: 9px;
+      width: 100%;
+      text-align: center;
+    }
   }
   #no-noms {
     text-align: center;
     margin: 50px 0px;
   }
+  @media (max-width: 690px) {
+    padding: 0;
+  }
+
 `
 
 const NominationCards= styled.div`
   display: flex;
-  justify-content: space-around;
-  padding: 20px 0px;
+  flex-direction: column;
+  gap: 10px;
+  @media (max-width: 690px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    justify-content: space-around;
+    gap: 10;
+    padding-top: 55px;
+  }
 `
   
   const NominationCard = styled.div`
+  @media (max-width: 690px) {
+    height: 100px;
+  }
   border-radius: 20px;
-  margin: 10px;
-  height: 150px;
-  width: 150px;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0px 10px 10px rgb(189 188 188 / 50%);
   position: relative;
   img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 0 0 20px 20px;
   }
   .description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsla(0,0%,72.2%,.5);
+    backdrop-filter: blur(2px);
+    border-radius: 0 0 20px 20px;
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     height: auto;
     width: 100%;
     text-align: center;
-    margin: 20px 0;
+    padding: 10px 0;
     #title {
       font-weight: bold;
       margin-bottom: 10px;
     }
     @media (max-width: 690px) {
-      font-size: 10px;
+      display: none ;
     }
+  }
+  animation: fadeIn 0.5s;
+  -webkit-animation: fadeIn 0.5s;
+  -moz-animation: fadeIn 0.5s;
+  -o-animation: fadeIn 0.5s;
+  -ms-animation: fadeIn 0.5s;
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
   }
 `
 
@@ -65,6 +120,8 @@ const FakeNav = styled.div`
     color: white;
     border: none;
     font-size: 20px;
+    margin-left: 5px;
+    cursor: pointer;
   }
 
 `
@@ -80,7 +137,6 @@ export default function Nominations({removeNomination, nominations}) {
             <img src={nom.Poster !== "N/A" ? nom.Poster : "./poster-placeholder.png"} alt={nom.Title}/>
             <div className="description">
               <div id="title">{nom.Title}</div>
-              <div>{nom.Year}</div>
             </div>
           </NominationCard>
         ))}

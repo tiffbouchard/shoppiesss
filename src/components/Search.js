@@ -11,6 +11,7 @@ const SearchForm = styled.form`
     border: solid 1px black;
     box-shadow: -5px 5px;
     padding: 6px;
+    border-radius: 10px;
   }
   button {
     font-size: 40px;

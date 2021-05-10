@@ -8,6 +8,7 @@ const FooterContainer = styled.footer`
   height: 200px;
   background-color: black;
   color: white;
+  padding-left: 200px;
   img {
     height: 80px;
     width: auto;
@@ -15,6 +16,9 @@ const FooterContainer = styled.footer`
   }
   a {
     color: white;
+  }
+  @media (max-width: 690px) {
+    display: none;
   }
 `
 

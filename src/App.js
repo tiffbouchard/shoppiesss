@@ -3,8 +3,6 @@ import './App.css';
 
 import Nav from "./components/Nav";
 import Results from "./components/Results";
-import Nominations from "./components/Nominations";
-import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 
 
@@ -16,9 +14,11 @@ import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
-  align-content: space-between;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 100vh;
+  @media (max-width: 690px) {
+    flex-direction: column;
+  }
 `
 const Main = styled.main`
   flex: 1;
@@ -109,9 +109,9 @@ class App extends Component {
     } else if (this.state.nominations.some( nom => nom['imdbID'] === result.imdbID )) {
         this.notify("You already added this movie!");
     } else {
-      const newNomArr = [...this.state.nominations, result];
+      const newNomArr = [result, ...this.state.nominations];
       localStorage.setItem("nominations", JSON.stringify(newNomArr));
-      this.setState({nominations: [...this.state.nominations, result]});
+      this.setState({nominations: [result, ...this.state.nominations]});
       this.notify("Yay! Added movie successfully");
     }
   }
@@ -141,15 +141,10 @@ class App extends Component {
           closeModal={this.closeModal}
         />
         <Nav 
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          searchQuery={searchQuery}
-        />
-        <Main>
-        <Nominations 
           nominations={nominations}
           removeNomination={this.removeNomination}
-          />
+        />
+        <Main>
         <Results
           noResultsError={noResultsError}
           searchResults={searchResults}
@@ -158,9 +153,12 @@ class App extends Component {
           loadMore={this.loadMore}
           page={page}
           allLoaded={allLoaded}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          searchQuery={searchQuery}
         />
         </Main>
-        <Footer/>
+        {/* <Footer/> */}
       </Container>
     );
   }
